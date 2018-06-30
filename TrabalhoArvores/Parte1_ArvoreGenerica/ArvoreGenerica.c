@@ -1,8 +1,97 @@
 #include "ArvoreGenerica.h"
 
 //Lista -----------------------------------------------------
+struct celula{
+	int conteudo;
+	struct celula *prox;
+	struct celula *anterior;
+};
 
+struct lista{
+	Celula *primeira;
+	Celula *ultima;
+};
 
+Lista* criar_lista(){
+	Lista *l = malloc(sizeof(Lista));
+	l->primeira = NULL;
+	l->ultima = NULL;
+	return l;
+}
+
+void lista_inicia(Lista *l){
+    l->primeira= NULL;
+    l->ultima = NULL;
+}
+
+void inserir_no_inicio_lista(Lista * l, int i){
+	Celula *c = malloc(sizeof(Celula));
+	c->conteudo = i;
+	c->prox = l->primeira;
+	if (tamanho_lista(l) == 0)
+    	l->ultima = c;
+	else
+    	l->primeira->anterior = c;
+	l->primeira = c;
+	c->anterior = NULL;
+}
+
+void inserir_no_final_lista(Lista *l, int i){
+	Celula *c = malloc(sizeof(Celula));
+	c->conteudo = i;
+	c->prox = NULL;
+	if (tamanho_lista(l) != 0){
+    	c->anterior = l->ultima;
+    	l->ultima->prox = c;
+	}
+	l->ultima = c;
+	if (tamanho_lista(l) == 0){
+    	l->primeira = c;
+    	c->anterior = NULL;
+	}
+}
+
+int tamanho_lista(Lista *l){
+	Lista *resto;
+	int tam;
+	if (l->primeira == NULL){
+    	return 0;
+	}
+	else{
+    	resto = (Lista *) malloc(sizeof(Lista));
+    	resto->primeira = l->primeira->prox;
+    	tam = tamanho_lista(resto);
+    	free(resto);
+    	return 1 + tam;
+	}
+}
+
+void remove_primeiro(Lista *l){
+    if(tamanho_lista(l) == 0){
+        puts("Lista vazia!\n");
+        return;
+    }
+    else if(tamanho_lista(l)  == 1){
+        Celula *aux = l->primeira;
+        lista_inicia(l);
+        free(aux);
+    }
+    else{
+        Celula *aux = l->primeira;
+        l->primeira->conteudo = l->primeira->prox->conteudo;
+        l->primeira = l->primeira->prox;
+        free(aux);
+    }
+}
+
+void imprime_lista(Lista *l){
+    Celula *aux = l->primeira;
+    printf("\nFILA: ");
+    while(aux != NULL){
+        printf("%d\t", aux->conteudo);
+        aux = aux->prox;
+    }
+}
 //Arvore -----------------------------------------------------
 
 Arv * cria_arvore(int elem) {
@@ -102,28 +191,67 @@ void exibe_postorder(Arv * a) {
 		printf("");
 
 	else if(a != NULL){
-		exibe_preorder(a->esq);
-		exibe_preorder(a->dir);
+		exibe_postorder(a->esq);
 		printf("%d ", a->info);
+		exibe_postorder(a->dir);
 	}
 }
+
+
+
+
+
+
 
 void exibe_percorre_nivel(Arv * a) {
 	if(arvore_vazia(a))
 		return;
 
+	Lista *lista = criar_lista();
 
-	else if (a->dir == NULL)	{
-		printf("%d ", a->info);
-		exibe_percorre_nivel(a->esq);
+	inserir_no_final_lista(lista,a->info);
+
+	Arv * aux = a;
+	Arv * aux1 = a;
+
+	while(tamanho_lista(lista) != 0){
+		printf("%d ", lista->primeira->conteudo);
+
+
+		remove_primeiro(lista);
+
+		if(aux->dir != NULL){
+			while(aux != NULL){
+				inserir_no_final_lista(lista,aux->dir->info);
+				aux = aux->dir;
+			}
+		}
+
+		else if(aux1->esq != NULL){
+			while(aux1 != NULL){
+				printf(" ooi \n");
+				inserir_no_final_lista(lista,aux1->esq->info);
+				aux1 = aux1->esq;
+			}
+		}
+		
+		
 	}
 
-	else{
-		printf("%d ", a->info);
-		exibe_percorre_nivel(a->dir);	
-		exibe_percorre_nivel(a->esq);
-	}
+
+	
 }
+
+
+
+
+
+
+
+
+
+
+
 
 int nro_folha(Arv * a) {
 	if(arvore_vazia(a))
