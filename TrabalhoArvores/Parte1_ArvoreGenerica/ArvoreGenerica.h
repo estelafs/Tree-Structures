@@ -31,11 +31,10 @@ int arvore_vazia(Arv * a);
 
 int insere_como_filha(Arv * mae, Arv * filha);
 
-int busca_elem(Arv * a, int elem);
+int existe_elem(Arv * a, int elem);
 
 void libera_arvore(Arv * a);
 
-int altura(Arv * a, int cont);
 
 //--------------------- FUNCIONAM
 void exibe_arvore(Arv * a);
@@ -43,8 +42,10 @@ void exibe_preorder(Arv * a);
 void exibe_postorder(Arv * a); 
 
 
-
-
+//---- TENTANDO
+// Arv * busca_arv_do_elem(Arv * a, int elem);
+// int altura_no(Arv * a, int elem);
+int altura(Arv * a); //nao funciona
 
 
 //--------------------- BARRINHA DA VERGONHA

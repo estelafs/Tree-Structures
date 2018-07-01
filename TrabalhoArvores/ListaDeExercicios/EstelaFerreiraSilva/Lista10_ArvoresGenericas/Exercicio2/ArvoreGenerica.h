@@ -23,6 +23,6 @@ int busca_elem(Arv * a, int elem);
 
 void libera_arvore(Arv * a);
 
-int altura(Arv * a, int cont);
+int altura(Arv * a, int cont); //NAO FUNCIONA
 
 #endif

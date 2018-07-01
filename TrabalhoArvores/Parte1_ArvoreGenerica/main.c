@@ -30,9 +30,16 @@ int main(){
 	exibe_postorder(A);
 	
 
-	// exibe_percorre_nivel(A);
-
-	printf("\nfolhas: %d\n", nro_folha(A));
+	puts("\n---------------ALTURAS---------------");
+	printf("Arv 1: %d\n", altura(A));
+	printf("Arv 2: %d\n", altura(B));
+	printf("Arv 3: %d\n", altura(C));
+	printf("Arv 4: %d\n", altura(D));
+	printf("Arv 5: %d\n", altura(E));
+	printf("Arv 6: %d\n", altura(F));
+	printf("Arv 7: %d\n", altura(G));
+	printf("Arv 8: %d\n", altura(H));
+	printf("Arv 9: %d\n", altura(I));
 
 
 

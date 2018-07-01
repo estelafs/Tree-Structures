@@ -1,4 +1,5 @@
 #include "ArvoreGenerica.h"
+#define max(a,b) (a>b ? a : b)
 
 //Lista -----------------------------------------------------
 struct celula{
@@ -124,15 +125,17 @@ int insere_como_filha(Arv * mae, Arv * filha) {
 	return 1;	
 }
 
-int busca_elem(Arv * a, int elem) {
+int existe_elem(Arv * a, int elem) {
 	if(arvore_vazia(a))
 		return 0;
 
 	if(a->info == elem)
 		return 1;
 
-	busca_elem(a->esq,elem);
-	busca_elem(a->dir,elem);
+	if(existe_elem(a->esq,elem)) 
+		return 1;
+	else
+		return existe_elem(a->dir,elem);
 }
 
 void libera_arvore(Arv * a) {
@@ -146,21 +149,6 @@ void libera_arvore(Arv * a) {
 	}
 
 	a = NULL;
-}
-
-int altura(Arv * a, int cont) {
-	if(arvore_vazia(a))
-		return 0;	
-
-	if(a->esq != NULL){
-		return altura(a->esq,(cont+1));
-	}
-
-	if(a->dir != NULL){
-		return altura(a->dir,cont);
-	}
-
-	return cont;
 }
 
 void exibe_arvore(Arv * a) {
@@ -198,10 +186,55 @@ void exibe_postorder(Arv * a) {
 }
 
 
+// //---------------------------------------------------- DÃO ERRADO
+// Arv * busca_arv_do_elem(Arv * a, int elem) {
+// 	if(arvore_vazia(a))
+// 		return;
+
+// 	if(a->info == elem)
+// 		return a;
+
+// 	if(a->dir != NULL) 
+// 		return busca_arv_do_elem(a->dir,elem);
+// 	else if(a->esq != NULL)
+// 		return busca_arv_do_elem(a->esq,elem);
+// }
+
+// int altura_no(Arv * a, int elem) {
+
+// 	if(! existe_elem(a,elem)) 
+// 		return -1;
+// 	puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+// 	exibe_arvore(busca_arv_do_elem(a,elem));
+// 	puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+// 	return altura(busca_arv_do_elem(a,elem),0);
+
+// }
+
+
+int altura(Arv * a) {
+	if(arvore_vazia(a))
+		return 0;	
+	
+	int resp = 0;
+	
+	if(a->esq != NULL){
+
+		Arv * aux = a->esq;
+		while(aux->esq != NULL){
+			resp = max(altura(aux),altura(aux)+1);
+			aux = aux->esq;
+		}
+		
+	}
+
+	return resp;
+}
 
 
 
 
+//------------------------------------ 
 
 void exibe_percorre_nivel(Arv * a) {
 	if(arvore_vazia(a))
@@ -245,14 +278,6 @@ void exibe_percorre_nivel(Arv * a) {
 
 
 
-
-
-
-
-
-
-
-
 int nro_folha(Arv * a) {
 	if(arvore_vazia(a))
 		return;
@@ -267,8 +292,5 @@ int nro_folha(Arv * a) {
 // int grau_arv(Arv * a){
 // 	if(arvore_vazia(a))
 // 		return;
-
-
-
 
 // }

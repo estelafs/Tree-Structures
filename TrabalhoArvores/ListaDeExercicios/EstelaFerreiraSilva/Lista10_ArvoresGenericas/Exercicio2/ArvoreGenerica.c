@@ -51,8 +51,10 @@ int busca_elem(Arv * a, int elem) {
 	if(a->info == elem)
 		return 1;
 
-	busca_elem(a->esq,elem);
-	busca_elem(a->dir,elem);
+	if(busca_elem(a->esq,elem)) 
+		return 1;
+	else
+		return busca_elem(a->dir,elem);
 }
 
 void libera_arvore(Arv * a) {
@@ -68,7 +70,7 @@ void libera_arvore(Arv * a) {
 	a = NULL;
 }
 
-int altura(Arv * a, int cont) {
+int altura(Arv * a, int cont) { //NAO FUNCIONA
 	if(arvore_vazia(a))
 		return 0;	
 

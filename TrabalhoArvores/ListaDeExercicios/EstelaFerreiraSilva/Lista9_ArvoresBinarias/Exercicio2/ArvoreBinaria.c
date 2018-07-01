@@ -47,13 +47,13 @@ int busca_elem(Arv * a, int elem){
 		return 0;
 	}
 
-	else if(a->info == elem){
+	if(a->info == elem)
 		return 1;
-	}
 
-	busca_elem(a->sae,elem);
-	busca_elem(a->sad,elem);
-
+	if(busca_elem(a->sae,elem)) 
+		return 1;
+	else
+		return busca_elem(a->sad,elem);
 }
 
 Arv * busca_pai(Arv * a, int elem){

@@ -25,7 +25,7 @@ int main(){
 	puts("---------------ARVORE---------------");
 	exibe_arvore(A);
 
-	printf("Altura: %d\n", altura(A,0));
+	printf("Busca: %d\n", busca_elem(A,7));
 
 	return 0;
 }

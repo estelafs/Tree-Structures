@@ -9,7 +9,7 @@ int main(){
 	Arv * a1 = cria_arvore(1,a2,a3);
 
 	printf("Altura a1: %d\n",  altura(a1));
-	printf("Altura a2: %d\n",  altura(a2));
+	printf("Existe 2: %d\n",  busca_elem(a1,2));
 	
 	mostra_arvore(a1);
 
