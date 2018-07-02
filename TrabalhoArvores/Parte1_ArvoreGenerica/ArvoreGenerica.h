@@ -28,29 +28,27 @@ void imprime_lista(Lista *l);
 //Arvore -----------------------------------------------------
 Arv * cria_arvore(int elem);
 int arvore_vazia(Arv * a);
-
 int insere_como_filha(Arv * mae, Arv * filha);
-
 int existe_elem(Arv * a, int elem);
-
 void libera_arvore(Arv * a);
-
 
 //--------------------- FUNCIONAM
 void exibe_arvore(Arv * a);
 void exibe_preorder(Arv * a);
 void exibe_postorder(Arv * a); 
 
+int altura(Arv * a);
+int nro_folha(Arv * a); 
 
 //---- TENTANDO
-// Arv * busca_arv_do_elem(Arv * a, int elem);
-// int altura_no(Arv * a, int elem);
-int altura(Arv * a); //nao funciona
+Arv * busca_arv_do_elem(Arv * a, int elem);
+int altura_no(Arv * a, int elem);
 
+int grau_arv(Arv * a);
 
 //--------------------- BARRINHA DA VERGONHA
 void exibe_percorre_nivel(Arv * a); //TA DANDO ERRADO 
 
-int nro_folha(Arv * a); //CONFERIR
+
 
 #endif

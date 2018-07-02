@@ -70,17 +70,21 @@ void libera_arvore(Arv * a) {
 	a = NULL;
 }
 
-int altura(Arv * a, int cont) { //NAO FUNCIONA
+int altura(Arv * a) {
 	if(arvore_vazia(a))
-		return 0;	
-
+		return -1;	
+	
+	int resp = 0;
+	
 	if(a->esq != NULL){
-		return altura(a->esq,(cont+1));
-	}
 
-	if(a->dir != NULL){
-		return altura(a->dir,cont);
+		Arv * aux = a->esq;
+		
+		while(aux != NULL){
+			resp = max(resp,altura(aux)+1);
+			aux = aux->dir;
+		}
+		
 	}
-
-	return cont;
+	return resp;
 }

@@ -30,16 +30,18 @@ int main(){
 	exibe_postorder(A);
 	
 
-	puts("\n---------------ALTURAS---------------");
-	printf("Arv 1: %d\n", altura(A));
-	printf("Arv 2: %d\n", altura(B));
-	printf("Arv 3: %d\n", altura(C));
-	printf("Arv 4: %d\n", altura(D));
-	printf("Arv 5: %d\n", altura(E));
-	printf("Arv 6: %d\n", altura(F));
-	printf("Arv 7: %d\n", altura(G));
-	printf("Arv 8: %d\n", altura(H));
-	printf("Arv 9: %d\n", altura(I));
+	puts("\n---------------grau_arv---------------");
+	printf("Arv 1: %d\n", grau_arv(A));
+	printf("Arv 2: %d\n", grau_arv(B));
+	printf("Arv 3: %d\n", grau_arv(C));
+	printf("Arv 4: %d\n", grau_arv(D));
+	printf("Arv 5: %d\n", grau_arv(E));
+	printf("Arv 6: %d\n", grau_arv(F));
+	printf("Arv 7: %d\n", grau_arv(G));
+	printf("Arv 8: %d\n", grau_arv(H));
+	printf("Arv 9: %d\n", grau_arv(I));
+
+	// printf("Grau 1: %d\n", grau_arv(A));
 
 
 

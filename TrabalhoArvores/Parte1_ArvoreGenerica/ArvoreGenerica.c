@@ -185,58 +185,91 @@ void exibe_postorder(Arv * a) {
 	}
 }
 
-
-// //---------------------------------------------------- DÃO ERRADO
-// Arv * busca_arv_do_elem(Arv * a, int elem) {
-// 	if(arvore_vazia(a))
-// 		return;
-
-// 	if(a->info == elem)
-// 		return a;
-
-// 	if(a->dir != NULL) 
-// 		return busca_arv_do_elem(a->dir,elem);
-// 	else if(a->esq != NULL)
-// 		return busca_arv_do_elem(a->esq,elem);
-// }
-
-// int altura_no(Arv * a, int elem) {
-
-// 	if(! existe_elem(a,elem)) 
-// 		return -1;
-// 	puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-// 	exibe_arvore(busca_arv_do_elem(a,elem));
-// 	puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-// 	return altura(busca_arv_do_elem(a,elem),0);
-
-// }
-
-
 int altura(Arv * a) {
 	if(arvore_vazia(a))
-		return 0;	
+		return -1;	
 	
 	int resp = 0;
 	
 	if(a->esq != NULL){
 
 		Arv * aux = a->esq;
-		while(aux->esq != NULL){
-			resp = max(altura(aux),altura(aux)+1);
-			aux = aux->esq;
+
+		while(aux != NULL){
+			resp = max(resp,altura(aux)+1);
+			aux = aux->dir;
 		}
 		
+	}
+	return resp;
+}
+
+int nro_folha(Arv * a) { //funciona
+	if(arvore_vazia(a))
+		return -1;
+
+	if(! a->esq) 
+		return 1;
+
+	Arv * aux = a->esq;
+	int resp = 0;
+
+	while(aux){
+		resp += nro_folha(aux);
+		aux = aux->dir;
 	}
 
 	return resp;
 }
+//---------------------------------------------------- DÃO ERRADO
 
+Arv* busca_arv_do_elem(Arv * a, int elem) {
+	if(arvore_vazia(a))
+		return NULL;
+	printf("<%d>  ", a->info);
+	if(a->info == elem)
+		return a;
+
+	Arv * aux = a->esq;
+	while(aux){
+		printf(" %d", aux->info);
+		aux = aux->dir;	
+	}
+puts("");
+	aux = a->esq;
+	while(aux) {
+
+		if(busca_arv_do_elem(aux,elem))
+			return aux;
+		aux = aux->dir;
+	}
+
+	return NULL;
+		
+	// if(a->dir != NULL) 
+	// 	return busca_arv_do_elem(a->dir,elem);
+	// else if(a->esq != NULL)
+	// 	return busca_arv_do_elem(a->esq,elem);
+}
+
+int altura_no(Arv * a, int elem) {
+
+	if(! existe_elem(a,elem)) 
+		return -1;
+	
+	// puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+	// exibe_arvore(busca_arv_do_elem(a,elem));
+	// puts("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+//////////////////
+	return altura(busca_arv_do_elem(a,elem));
+}
 
 
 
 //------------------------------------ 
 
-void exibe_percorre_nivel(Arv * a) {
+void exibe_percorre_nivel(Arv * a) { //DA MUITO ERRADO
 	if(arvore_vazia(a))
 		return;
 
@@ -278,19 +311,22 @@ void exibe_percorre_nivel(Arv * a) {
 
 
 
-int nro_folha(Arv * a) {
+
+
+int grau_arv(Arv * a) {
 	if(arvore_vazia(a))
-		return;
+		return -1;
 
-	if(a->esq == NULL)
-		return (nro_folha(a->dir) + 1);
+	if(! a->esq) 
+		return 0;
 
-	else
-		return nro_folha(a->esq);
+	Arv * aux = a->esq;
+	int resp = 1;	
+
+	while(aux){
+		resp = grau_arv(aux) + 1;
+		aux = aux->dir;
+	}
+
+	return resp;
 }
-
-// int grau_arv(Arv * a){
-// 	if(arvore_vazia(a))
-// 		return;
-
-// }
