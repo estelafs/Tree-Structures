@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 struct registro{
 	int chave;
 	char nome[100];
@@ -35,9 +34,8 @@ void reg_cpy(reg *a, reg *b); //copia o conteudo de b pra a
 
 Arv * cria_arvore(Arv * esq, Arv * dir, reg *elem);
 
-
-//-------------------------------
 void insere_ordenado(Arv *pai, Arv * a,  reg *elem, int n); //NAO TENHO CERTEZA SE FUNCIONA
-int remove_ordenado(Arv * a, int elem); //DANDO MUITO ERRADO
+int remove_ordenado(Arv * a, int elem);
+Arv * busca_bin(Arv * a, reg * elem);
 
 #endif

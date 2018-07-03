@@ -21,7 +21,6 @@ void libera_arvore(Arv * a){
 		libera_arvore(a->sad);
 		free(a);
 	}
-
 	a = NULL;
 }
 
@@ -35,7 +34,6 @@ void exibe_arvore(Arv * a){
 		exibe_arvore(a->sad);
 		printf(">");
 	}
-
 }
 
 void exibe_arvore_ordenado(Arv * a){
@@ -70,9 +68,7 @@ void exibe_registro(reg * elem) {//ta funcionando
 	printf("%s", elem->nome);
 
 	printf("\tIdade: %d \t Salario: %.2lf\n ", elem->idade, elem->salario);
-
 }
-
 
 void reg_cpy(reg *a, reg *b) { //ta funcionando
 	
@@ -81,7 +77,6 @@ void reg_cpy(reg *a, reg *b) { //ta funcionando
 	a->idade = b->idade;
 	a->salario = b->salario;
 }
-
 
 Arv * cria_arvore(Arv * esq, Arv * dir, reg *elem) {
 	Arv * nova = (Arv*) malloc(sizeof(Arv));
@@ -95,13 +90,8 @@ Arv * cria_arvore(Arv * esq, Arv * dir, reg *elem) {
 	nova->sae = esq;
 
 	return nova;
-
 }
 
-
-
-
-//----------------------------------------------------------------------------------
 void insere_ordenado(Arv *pai, Arv * a, reg *elem, int n) { //CONFERIR
 	if(arvore_vazia(a)){
 		Arv * raiz = cria_arvore(NULL,NULL,elem);
@@ -116,61 +106,51 @@ void insere_ordenado(Arv *pai, Arv * a, reg *elem, int n) { //CONFERIR
 	}
 	else	
 		insere_ordenado(a, a->sae,elem,2);
-
 }
 
-
-
-
-int remove_ordenado(Arv * a, int elem) { //NAO FUNCIONA
+int remove_ordenado(Arv * a, int elem) {
 	if(arvore_vazia(a))
 		return 0;
 
-	if(elem > a->info.chave)
-		return remove_ordenado(a->sad,elem);	
-
-	else if(elem < a->info.chave)
-		return remove_ordenado(a->sae,elem);
-
-	else{
-		if(a->sae != NULL & a->sad == NULL){
-			Arv *aux = a;
-			a = a->sae;
-			free(aux);
-			return 1;
-		}
-
-		else if(a->sae == NULL & a->sad != NULL){
-			Arv * aux = a;
-			a = a->sad;
-			free(aux);
-			return 1;
-		}
-
-		else {
-			Arv * aux = cria_arvore(NULL,NULL,cria_elem(0,"",0,0));
-			aux = a->sae;
-
-
-			while(aux->sad != NULL){ //NAO ENTRA NESSE WHILE
-				puts("oi");
-				aux = aux->sad;
-			}
-
-			//Arv * aux2 = cria_arvore(NULL,NULL,cria_elem(0,"",0,0));
-			reg * aux2 = cria_elem(0,"",0,0);
-			// aux2->info = a->info;
-			// a->info = aux->info;
-			// aux->info = aux2->info; &(*nova).info
-
-			// reg * infoAux = cria_elem(0,"",0,0.0);
-
-			reg_cpy(aux2,&(*a).info);
-			reg_cpy(&(*a).info,&(*aux).info);
-			reg_cpy(&(*aux).info,aux2);
-
-			return remove_ordenado(a->sae,elem);
-		}
+	else if((a->info.chave != elem) && (a->info.chave >= elem)){
+		remove_ordenado(a->sad,elem);
 	}
 
+	else if((a->info.chave != elem) && (a->info.chave < elem)){
+		remove_ordenado(a->sae,elem);
+	}
+
+	else{
+		if(a->sae == NULL && a->sad == NULL){
+			libera_arvore(a);
+			a = NULL;
+		}
+		else if(a->sae != NULL && a->sad == NULL){
+			Arv * aux = a;
+			a = a->sae;
+			free(aux); 
+			aux = NULL;
+		}
+		else if(a->sae == NULL && a->sad != NULL){
+			Arv * aux = a;
+			a = a->sad;
+			free(aux); 
+			aux = NULL;
+		}
+		return 1;
+	}
+}
+
+Arv * busca_bin(Arv * a, reg * elem) {
+	if(arvore_vazia(a)) 
+		return NULL;
+
+	if(a->info.chave == elem->chave) 
+		return a;
+
+	else if(a->info.chave > elem->chave) 
+		return busca_bin(a->sad,elem);
+
+	else 
+		busca_bin(a->sae,elem);
 }
